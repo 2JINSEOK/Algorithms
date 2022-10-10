@@ -13,26 +13,35 @@
 
 '''
 
+
+
+def solution(N, stages):
+#    number_of_failure = {}
+#    number_of_challenger = {}
+    probability = {}
+    for i in range(1, N + 1):  # i == stage_number
+        failure_cnt = 0  # count the number of failure
+        challenger_cnt = 0  # count the number of challenger
+        for j in range(len(stages)):  # stages[j] == jth user's location
+            if stages[j] >= i: challenger_cnt += 1
+            if stages[j] == i: failure_cnt += 1
+
+#        number_of_failure[i] = failure_cnt
+#        number_of_challenger[i] = challenger_cnt
+
+        # 도전한 사람의 숫자는 어떻게 카운트 할 것인가
+        if challenger_cnt == 0:
+            probability_of_failure == 0
+        else:
+            probability_of_failure = failure_cnt / challenger_cnt
+        probability[i] = probability_of_failure
+
+    # [(key, value), (key, value), ...]
+    res = dict(sorted(probability.items(), key=lambda x: [-x[1], x[0]]))  # x[1] 내림차순, x[0] 오름차순
+
+    return list(res.keys())
+
+
 N = 5
 stages = [2, 1, 2, 6, 2, 4, 3, 3]
-
-number_of_failure = []
-number_of_challenger = []
-for i in range(N): # i == stage_number
-    cnt1 = 0 # count the number of failure
-    cnt2 = 0 # count the number of challenger
-    for j in range(len(stages)):
-        if i == N - 1: # i == final_stage
-            if stages[j] == N + 1: continue
-        else:
-            if stages[j] == i + 1: cnt1 += 1
-    number_of_failure.append(cnt1)
-
-# 도전한 사람의 숫자는 어떻게 카운트 할 것인가
-for i in range(len(number_of_failure)): # calculate probability of failure
-    probability_of_failure = 0
-    if number_of_failure[i] != 0:
-        probability_of_failure = (number_of_failure[i]) / number_of_challenger[i]
-
-
-
+print(solution(N, stages))
